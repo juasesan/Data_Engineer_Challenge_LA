@@ -8,8 +8,9 @@ def q3_time(file_path: str) -> List[Tuple[str, int]]:
 
     with open(file_path, "r") as tweets_file:
         for line in tweets_file:
-            users_mentioned = json.loads(line)['mentionedUsers']
-            if users_mentioned:
-                users_count.update([user['username'] for user in users_mentioned])
+            try:
+                users_count.update([user['username'] for user in json.loads(line)['mentionedUsers']])
+            except:
+                pass
 
     return users_count.most_common(10)
